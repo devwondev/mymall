@@ -1,6 +1,6 @@
 1. 메인페이지
 (C)IndexController.doGet -> (V)index.jsp
 2. 회원가입 폼
-(C)AddMember.doGet -> (V)addMember.jsp
+(C)AddMemberController.doGet -> (V)addMember.jsp
 3. 회원가입 액션
-(C)AddMember.doPost -> (M)MemberDao.insertMember -> re:(V)login
+(C)AddMember.doPost -> (M)memberDao.insertMember
