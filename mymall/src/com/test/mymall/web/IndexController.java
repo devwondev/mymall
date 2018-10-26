@@ -1,4 +1,4 @@
-package com.test.mymall;
+package com.test.mymall.web;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
