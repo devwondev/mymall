@@ -16,16 +16,13 @@ public class OrderController extends HttpServlet {
 	MemberItemDao memberItemDao;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("OrderController.doGet()");
-		Member member = (Member) request.getSession().getAttribute("loginMember");
-		if(member != null) {
-			int itemNo = Integer.parseInt(request.getParameter("itemNo"));
-			memberItemDao = new MemberItemDao();
-			int memberNo = member.getNo();
-			MemberItem memberItem = new MemberItem();
-			memberItem.setItemNo(itemNo);
-			memberItem.setMemberNo(member.getNo());
-			memberItemDao.insertMemberItem(memberItem);
-			response.sendRedirect(request.getContextPath()+"/OrderListController");
-		}	
+		int itemNo = Integer.parseInt(request.getParameter("itemNo"));
+		int memberNo = (int)request.getSession().getAttribute("loginMemberNo");
+		memberItemDao = new MemberItemDao();
+		MemberItem memberItem = new MemberItem();
+		memberItem.setItemNo(itemNo);
+		memberItem.setMemberNo(memberNo);
+		memberItemDao.insertMemberItem(memberItem);
+		response.sendRedirect(request.getContextPath()+"/OrderListController");
 	}
 }

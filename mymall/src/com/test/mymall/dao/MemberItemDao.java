@@ -13,6 +13,7 @@ public class MemberItemDao {
 	public void deleteMemberItem(Connection conn, int no) {
 		//PreparedStatement stmt = conn.prepareStatement("");
 	}
+	// 주문 입력 처리
 	public void insertMemberItem(MemberItem memberItem) {
 		System.out.println("MemberItemDao.insertMemberItem()");
 		Connection conn = null;
@@ -29,25 +30,26 @@ public class MemberItemDao {
 			DBHelper.close(null, stmt, conn);
 		}
 	}
-	// MemberItem INNER JOIN item
-	public ArrayList<HashMap<String, Object>> getMemberItemList(int memberNo){
-		System.out.println("MemberItemDao.getMemberItemList()");
+	// 주문리스트
+	// MemberItem INNER JOIN item 
+	public ArrayList<HashMap<String, Object>> MemberItemList(int memberNo){
+		System.out.println("MemberItemDao.MemberItemList()");
 		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		try {
 			conn = DBHelper.getConnection();
-			stmt = conn.prepareStatement("SELECT mi.no, mi.order_date, mi.item_no, i.name, i.price FROM member_item mi INNER JOIN item i ON mi.item_no = i.no WHERE mi.member_no=?");
+			stmt = conn.prepareStatement("SELECT mi.no, mi.item_no, i.name, i.price, mi.order_date FROM member_item mi INNER JOIN item i ON mi.item_no = i.no WHERE mi.member_no=?");
 			stmt.setInt(1, memberNo);
 			rs = stmt.executeQuery();
 			while(rs.next()) {
 				HashMap<String, Object> map = new HashMap<String, Object>();
-				map.put("memberItemNo", rs.getInt(1));
-				map.put("itemNO", rs.getInt(2));
-				map.put("itemName", rs.getString(3));
-				map.put("itemPrice", rs.getInt(4));
-				map.put("orderDate", rs.getString(5));
+				map.put("memberItemNo", rs.getInt("no"));
+				map.put("itemNo", rs.getInt("item_no"));
+				map.put("itemName", rs.getString("name"));
+				map.put("itemPrice", rs.getInt("price"));
+				map.put("orderDate", rs.getString("order_date"));
 				list.add(map);
 			}
 		}catch(Exception exception) {

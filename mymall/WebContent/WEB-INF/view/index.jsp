@@ -8,22 +8,23 @@
 </head>
 <body>
 	<h1>index</h1>
-	<c:if test="${loginMember.id == null}">
+	<c:if test="${loginMemberId == null}">
 		<a href="${pageContext.request.contextPath}/AddMemberController">회원가입</a>
 		<a href="${pageContext.request.contextPath}/LoginController">로그인</a>
 	</c:if>
-	<c:if test="${loginMember.id != null}">
-		${loginMember.id}님 반갑습니다.
+	<c:if test="${loginMemberId != null}">
+		${loginMemberId}님 반갑습니다.
 		<a href="${pageContext.request.contextPath}/LogoutController">로그아웃</a><br>
-	<c:if test="${loginMember.level == 1}">
+	<c:if test="${loginMemberLevel == 1}">
 		관리자
 		<a href="">회원리스트</a>
-		<a href="${pageContext.request.contextPath}/ItemListController">상품리스트</a>
+		<a href="">상품리스트</a>
 	</c:if>
-	<c:if test="${loginMember.level == 0}">
+	<c:if test="${loginMemberLevel == 0}">
 		회원
 		<a href="">마이페이지</a>
 		<a href="${pageContext.request.contextPath}/ItemListController">상품리스트</a>
+		<a href="${pageContext.request.contextPath}/OrderListController?memberNo=${loginMemberNo}">주문리스트</a>
 	</c:if>
 	</c:if>
 </body>

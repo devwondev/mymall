@@ -36,9 +36,12 @@ public class LoginController extends HttpServlet {
 		member.setId(id);
 		member.setPw(pw);
 		Member memberSession = memberDao.login(member);
+		System.out.println(memberSession.getNo()+"<--memberSession.getNo");
 		if(memberSession.getId() != null) {
 			HttpSession session = request.getSession();
-			session.setAttribute("loginMember",memberSession);
+			session.setAttribute("loginMemberNo",memberSession.getNo());
+			session.setAttribute("loginMemberId",memberSession.getId());
+			session.setAttribute("loginMemberLevel",memberSession.getLevel());
 			response.sendRedirect(request.getContextPath()+"/IndexController");
 		}else {
 			request.getRequestDispatcher("/WEB-INF/view/login.jsp").forward(request, response);

@@ -12,20 +12,18 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.test.mymall.dao.MemberItemDao;
+import com.test.mymall.vo.Member;
 
 @WebServlet("/OrderListController")
 public class OrderListController extends HttpServlet {
-	
+	MemberItemDao memberItemDao;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		MemberItemDao memberItemDao;
 		System.out.println("OrderListController.doGet()");
+		memberItemDao = new MemberItemDao();
+		int memberNo = (int) request.getSession().getAttribute("loginMemberNo");
+		ArrayList<HashMap<String, Object>> memberItemList = memberItemDao.MemberItemList(memberNo);
 		HttpSession session = request.getSession();
-		if(session.getAttribute("loginMember") != null) {
-			memberItemDao = new MemberItemDao();
-			int memberNO = Integer.parseInt(request.getParameter("memberNO"));
-			ArrayList<HashMap<String, Object>> list = memberItemDao.getMemberItemList(memberNO);
-			request.setAttribute("orderList", list);
-			request.getRequestDispatcher("/WEB-INF/view/orderList.jsp").forward(request, response);
-		}
+		request.setAttribute("memberItemList", memberItemList);
+		request.getRequestDispatcher("/WEB-INF/view/orderList.jsp").forward(request, response);
 	}
 }

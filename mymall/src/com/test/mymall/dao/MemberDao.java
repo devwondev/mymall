@@ -35,11 +35,12 @@ public class MemberDao {
 		Member memberCheck = new Member();
 		try {
 			conn = DBHelper.getConnection();
-			stmt = conn.prepareStatement("SELECT id,level FROM member WHERE id=? AND pw=?");
+			stmt = conn.prepareStatement("SELECT no,id,level FROM member WHERE id=? AND pw=?");
 			stmt.setString(1, member.getId());
 			stmt.setString(2, member.getPw());
 			rs = stmt.executeQuery();
 			if(rs.next()) {
+				memberCheck.setNo(rs.getInt("no"));
 				memberCheck.setId(rs.getString("id"));
 				memberCheck.setLevel(rs.getInt("level"));
 			}else {
@@ -53,6 +54,7 @@ public class MemberDao {
 		}
 		return memberCheck;
 	}
+	
 	// 회원탈퇴(회원탈퇴되면 주문취소되야함->트랜잭션 Rollback)
 	public void deleteMember(int no) {
 		
