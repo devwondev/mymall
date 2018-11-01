@@ -53,4 +53,8 @@ public class MemberDao {
 		}
 		return memberCheck;
 	}
+	// 회원탈퇴(회원탈퇴되면 주문취소되야함->트랜잭션 Rollback)
+	public void deleteMember(int no) {
+		
+	}
 }

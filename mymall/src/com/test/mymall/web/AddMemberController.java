@@ -16,6 +16,7 @@ public class AddMemberController extends HttpServlet {
 	// 2. 모델호출
 	// 3. 뷰 랜더링
 	//  컨트롤러가 필요로하는 dao는 무조건 위에..
+	// private MemberService memberService;
 	private MemberDao memberDao;
 	// 회원가입 폼
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -25,6 +26,8 @@ public class AddMemberController extends HttpServlet {
 	// 회원가입 처리
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("AddMemberController.doPost()");
+		// MemberService memberService = new MemberService();
+		// memberService.addMember();
 		String id = request.getParameter("id");
 		String pw = request.getParameter("pw");
 		memberDao = new MemberDao();
@@ -36,7 +39,7 @@ public class AddMemberController extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		response.sendRedirect("/mymall/LoginController");
+		response.sendRedirect(request.getContextPath()+"/LoginController");
 	}
 
 }
