@@ -21,28 +21,27 @@ public class LoginController extends HttpServlet {
 			request.getRequestDispatcher("/WEB-INF/view/login.jsp").forward(request, response);
 		} else {
 			System.out.println("로그인 중입니다");
-			response.sendRedirect(request.getContextPath()+"/index");
+			response.sendRedirect(request.getContextPath()+"/IndexController");
 		}
 	}
 	// 로그인 처리
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("LoginController.doPost()");
-		boolean isLogin = false;
 		Member member = new Member();
 		memberDao = new MemberDao();
 		String id = request.getParameter("id");
 		String pw = request.getParameter("pw");
+		System.out.println(id+"<--id LoginController.doPost");
+		System.out.println(pw+"<--pw LoginController.doPost");
 		member.setId(id);
 		member.setPw(pw);
-		isLogin = memberDao.loginMember(member);
-		
-		if(isLogin) {
+		Member memberSession = memberDao.login(member);
+		if(memberSession.getId() != null) {
 			HttpSession session = request.getSession();
-			session.setAttribute("loginMember", member.getId());
-			response.sendRedirect(request.getContextPath()+"/index");
-		}
-		else {
-			response.sendRedirect(request.getContextPath()+"/login");
+			session.setAttribute("loginMember",memberSession);
+			response.sendRedirect(request.getContextPath()+"/IndexController");
+		}else {
+			request.getRequestDispatcher("/WEB-INF/view/login.jsp").forward(request, response);
 		}
 	}
 

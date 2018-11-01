@@ -4,3 +4,12 @@
 (C)AddMemberController.doGet -> (V)addMember.jsp
 3. 회원가입 액션
 (C)AddMember.doPost -> (M)memberDao.insertMember
+4. 로그인 폼
+(C)LoginController.doGet -> (V)login.jsp
+5. 로그인 액션
+(C)LoginContoller.doPost -> (M)MemberDao.login()
+
+11.01(목)
+1. 세션 로그인 정보 수정
+2. 주문
+3. 주문 목록(조인)
