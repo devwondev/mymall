@@ -3,29 +3,31 @@ package com.test.mymall.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import com.test.mymall.commons.DBHelper;
 import com.test.mymall.vo.Member;
 
 public class MemberDao {
-	// 회원가입
-	public void insertMember(Member member) {
-		System.out.println("MemberDao.insertMember()");
-		Connection conn = null;
+	// 회원탈퇴(회원탈퇴되면 주문취소되야함->트랜잭션 Rollback)
+	public void deleteMember(Connection conn,int no) throws SQLException {
+		System.out.println("MemberDao.deleteMember()");
 		PreparedStatement stmt = null;
-		try {
-			conn = DBHelper.getConnection();
-			stmt = conn.prepareStatement("INSERT INTO member(id,pw) VALUES(?,?)");
-			stmt.setString(1, member.getId());
-			stmt.setString(2, member.getPw());
-			stmt.executeUpdate();
-		}catch(Exception exception) {
-			exception.printStackTrace();
-		}finally {
-			DBHelper.close(null, stmt, conn);
-		}
+		stmt = conn.prepareStatement("DELETE FROM member WHERE no=?");
+		stmt.setInt(1, no);
+		stmt.executeUpdate();
+		stmt.close();
 	}
-	
+	// 회원가입
+	public void insertMember(Connection conn, Member member) throws SQLException {
+		System.out.println("MemberDao.insertMember()");
+		PreparedStatement stmt = null;
+		stmt = conn.prepareStatement("INSERT INTO member(id,pw) VALUES(?,?)");
+		stmt.setString(1, member.getId());
+		stmt.setString(2, member.getPw());
+		stmt.executeUpdate();
+		stmt.close();
+	}
 	// 로그인 (권한, 아이디)
 	public Member login(Member member) {
 		System.out.println("MemberDao.login()");
@@ -55,8 +57,5 @@ public class MemberDao {
 		return memberCheck;
 	}
 	
-	// 회원탈퇴(회원탈퇴되면 주문취소되야함->트랜잭션 Rollback)
-	public void deleteMember(int no) {
-		
-	}
+	
 }

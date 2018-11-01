@@ -22,7 +22,8 @@
 	</c:if>
 	<c:if test="${loginMemberLevel == 0}">
 		회원
-		<a href="">마이페이지</a>
+		<a href="${pageContext.request.contextPath}/ModifyMemberController?memberId=${loginMemberId}">회원정보수정</a>
+		<a href="${pageContext.request.contextPath}/DeleteMemberController?memberNo=${loginMemberNo}">회원탈퇴</a>
 		<a href="${pageContext.request.contextPath}/ItemListController">상품리스트</a>
 		<a href="${pageContext.request.contextPath}/OrderListController?memberNo=${loginMemberNo}">주문리스트</a>
 	</c:if>
