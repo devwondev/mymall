@@ -10,11 +10,12 @@ import com.test.mymall.vo.Member;
 
 public class MemberDao {
 	// 회원탈퇴(회원탈퇴되면 주문취소되야함->트랜잭션 Rollback)
-	public void deleteMember(Connection conn,int no) throws SQLException {
+	public void deleteMember(Connection conn, int no) throws SQLException {
 		System.out.println("MemberDao.deleteMember()");
 		PreparedStatement stmt = null;
 		stmt = conn.prepareStatement("DELETE FROM member WHERE no=?");
 		stmt.setInt(1, no);
+		System.out.println(stmt+"<--stmt");
 		stmt.executeUpdate();
 		stmt.close();
 	}
@@ -29,31 +30,24 @@ public class MemberDao {
 		stmt.close();
 	}
 	// 로그인 (권한, 아이디)
-	public Member login(Member member) {
+	public Member login(Connection conn, Member member) throws SQLException {
 		System.out.println("MemberDao.login()");
-		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		Member memberCheck = new Member();
-		try {
-			conn = DBHelper.getConnection();
-			stmt = conn.prepareStatement("SELECT no,id,level FROM member WHERE id=? AND pw=?");
-			stmt.setString(1, member.getId());
-			stmt.setString(2, member.getPw());
-			rs = stmt.executeQuery();
-			if(rs.next()) {
-				memberCheck.setNo(rs.getInt("no"));
-				memberCheck.setId(rs.getString("id"));
-				memberCheck.setLevel(rs.getInt("level"));
-			}else {
-				memberCheck.setId(null);
-			}
-			
-		}catch(Exception exception) {
-			exception.printStackTrace();
-		}finally {
-			DBHelper.close(rs, stmt, conn);
+		stmt = conn.prepareStatement("SELECT no,id,level FROM member WHERE id=? AND pw=?");
+		stmt.setString(1, member.getId());
+		stmt.setString(2, member.getPw());
+		rs = stmt.executeQuery();
+		if(rs.next()) {
+			memberCheck.setNo(rs.getInt("no"));
+			memberCheck.setId(rs.getString("id"));
+			memberCheck.setLevel(rs.getInt("level"));
+		}else {
+			memberCheck.setId(null);
 		}
+		rs.close();
+		stmt.close();
 		return memberCheck;
 	}
 	

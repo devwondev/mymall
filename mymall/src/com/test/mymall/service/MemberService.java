@@ -11,8 +11,8 @@ import com.test.mymall.vo.Member;
 public class MemberService {
 	private MemberDao memberDao;
 	private MemberItemDao memberItemDao;
-	//회원정보수정, 탈퇴해야함!!
-	//RemoveMemberController에서 MemberService.removeMember()호출
+	//회원정보수정해야함!!
+	//DeleteMemberController에서 MemberService.removeMember()호출
 	public void removeMember(int no) {
 		System.out.println("MemberService.removeMember()");
 		Connection conn = null;
@@ -20,12 +20,10 @@ public class MemberService {
 			// 처리할 connection 생성
 			conn = DBHelper.getConnection();
 			conn.setAutoCommit(false);// 자동 커밋하지않겠다..(이 부분 검색해보자)
-			// 1. function
-			memberDao = new MemberDao();
-			memberDao.deleteMember(conn, no);
-			// 2. function
 			memberItemDao = new MemberItemDao();
 			memberItemDao.deleteMemberItem(conn, no);
+			memberDao = new MemberDao();
+			memberDao.deleteMember(conn, no);
 			conn.commit();
 		}catch(Exception e) {
 			try {
@@ -51,5 +49,22 @@ public class MemberService {
 		}finally {
 			DBHelper.close(null, null, conn);
 		}
+	}
+	// 로그인
+	public Member login(Member member) {
+		System.out.println("MemberService.login()");
+		Connection conn = null;
+		System.out.println(member+"서비스member");
+		memberDao = new MemberDao();
+		Member memberCheck = null;
+		try {
+			conn = DBHelper.getConnection();
+			memberCheck = memberDao.login(conn, member);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			DBHelper.close(null, null, conn);
+		}
+		return memberCheck;
 	}
 }

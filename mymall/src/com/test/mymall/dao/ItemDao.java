@@ -11,12 +11,14 @@ import com.test.mymall.vo.Item;
 
 public class ItemDao {
 	// 상품리스트
-	public ArrayList<Item> itemSelect(Connection conn) throws SQLException{
+	public ArrayList<Item> itemSelect(Connection conn, int currentPage, int rowPerPage) throws SQLException{
 		System.out.println("ItemDao.itemSelect()");
 		ArrayList<Item> itemList = new ArrayList<Item>();
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		stmt = conn.prepareStatement("SELECT no, name, price FROM item ORDER BY no");
+		stmt = conn.prepareStatement("SELECT no, name, price FROM item ORDER BY no LIMIT ?,?");
+		stmt.setInt(1, (currentPage-1)*rowPerPage);
+		stmt.setInt(2, rowPerPage);
 		rs = stmt.executeQuery();
 		while(rs.next()) {
 			Item item = new Item();
@@ -28,6 +30,21 @@ public class ItemDao {
 		stmt.close();
 		rs.close();
 		return itemList;
+	}
+	// 전체카운트
+	public int getItemCount(Connection conn) throws SQLException {
+		System.out.println("ItemDao.getItemCount()");
+		int count = 0;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		stmt = conn.prepareStatement("SELECT COUNT(*) FROM item");
+		rs = stmt.executeQuery();
+		if(rs.next()) {
+			count = rs.getInt(1);
+		}
+		stmt.close();
+		rs.close();
+		return count;
 	}
 		
 }

@@ -8,12 +8,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.test.mymall.dao.MemberDao;
+import com.test.mymall.service.MemberService;
 import com.test.mymall.vo.Member;
 
 @WebServlet("/LoginController")
 public class LoginController extends HttpServlet {
-	private MemberDao memberDao;
+	private MemberService memberService;
 	// 로그인폼
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("LoginController.doGet()");
@@ -28,14 +28,14 @@ public class LoginController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("LoginController.doPost()");
 		Member member = new Member();
-		memberDao = new MemberDao();
+		memberService = new MemberService();
 		String id = request.getParameter("id");
 		String pw = request.getParameter("pw");
 		System.out.println(id+"<--id LoginController.doPost");
 		System.out.println(pw+"<--pw LoginController.doPost");
 		member.setId(id);
 		member.setPw(pw);
-		Member memberSession = memberDao.login(member);
+		Member memberSession = memberService.login(member);
 		System.out.println(memberSession.getNo()+"<--memberSession.getNo");
 		if(memberSession.getId() != null) {
 			HttpSession session = request.getSession();

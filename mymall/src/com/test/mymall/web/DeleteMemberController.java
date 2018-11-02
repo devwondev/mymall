@@ -13,13 +13,14 @@ import com.test.mymall.service.MemberService;
 
 @WebServlet("/DeleteMemberController")
 public class DeleteMemberController extends HttpServlet {
-	MemberService memberService;
+	private MemberService memberService;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// 삭제가 안됨....세션종료 후 인덱스로는 잘간다
+		System.out.println("DeleteMemberController.doGet()");
 		HttpSession session = request.getSession();
 		if(session.getAttribute("loginMemberNo") != null) {
 			memberService = new MemberService();
 			int memberNo = (int)request.getSession().getAttribute("loginMemberNo");
+			System.out.println(memberNo+"<--memberNo DeleteMemberController");
 			memberService.removeMember(memberNo);
 			session.invalidate();
 			response.sendRedirect(request.getContextPath()+"/IndexController");

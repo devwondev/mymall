@@ -13,8 +13,10 @@ import com.test.mymall.vo.MemberItem;
 public class MemberItemDao {
 	// 주문목록 삭제
 	public void deleteMemberItem(Connection conn, int no) throws SQLException {
+		System.out.println("MemberItemDao.deleteMemberItem()");
 		PreparedStatement stmt = conn.prepareStatement("DELETE FROM member_item WHERE member_no=?");
 		stmt.setInt(1, no);
+		System.out.println(stmt+"<--stmt");
 		stmt.executeUpdate();
 		stmt.close();
 	}
@@ -25,6 +27,7 @@ public class MemberItemDao {
 		stmt = conn.prepareStatement("INSERT INTO member_item(member_no, item_no, order_date) VALUES(?,?,now())");
 		stmt.setInt(1, memberItem.getMemberNo());
 		stmt.setInt(2, memberItem.getItemNo());
+		System.out.println(stmt+"<--stmt");
 		stmt.executeUpdate();
 		stmt.close();
 	}
