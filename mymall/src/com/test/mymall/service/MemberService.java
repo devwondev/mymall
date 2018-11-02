@@ -3,16 +3,44 @@ package com.test.mymall.service;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+//import org.apache.ibatis.session.SqlSession;
+
 import com.test.mymall.commons.DBHelper;
 import com.test.mymall.dao.MemberDao;
 import com.test.mymall.dao.MemberItemDao;
 import com.test.mymall.vo.Member;
 
 public class MemberService {
+	//mybatis
+	//SqlSession sqlSession;
 	private MemberDao memberDao;
 	private MemberItemDao memberItemDao;
 	//회원정보수정해야함!!
-	//DeleteMemberController에서 MemberService.removeMember()호출
+/*	public void removeMember(int no) {
+		System.out.println("MemberService.removeMember()");
+		Connection conn = null;
+		try {
+			// 처리할 connection 생성
+			sqlSession = DBHelper.getSqlSession();
+			//conn.setAutoCommit(false);// 자동 커밋하지않겠다
+			sqlSession.commit();
+			memberItemDao = new MemberItemDao();
+			memberItemDao.deleteMemberItem(conn, no);
+			memberDao = new MemberDao();
+			memberDao.deleteMember(conn, no);
+			//conn.commit();
+		}catch(Exception e) {
+			try {
+				sqlSession.rollback();
+				//conn.rollback();	
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}finally {
+			sqlSession.close();
+		}
+		
+	}*/
 	public void removeMember(int no) {
 		System.out.println("MemberService.removeMember()");
 		Connection conn = null;

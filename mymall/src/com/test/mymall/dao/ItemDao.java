@@ -5,20 +5,31 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.test.mymall.commons.DBHelper;
 import com.test.mymall.vo.Item;
 
 public class ItemDao {
+	//mybatis select
+	/*public List<Item> selectItemList(SqlSession sqlSession){
+	 * sqlSession.selectList(id명,매개변수);	//매개변수없으면 안적어도됨..
+	 * sqlSession.selectList("com.test.mymall.dao.ItemMapper.selectItemList");
+	 * return list;
+	 * */
+	//mybatis insert
+	/*public int insertItem(SqlSession sqlSession, Item item) {
+		return sqlSession.insert("",item);
+	}*/
 	// 상품리스트
-	public ArrayList<Item> itemSelect(Connection conn, int currentPage, int rowPerPage) throws SQLException{
+	public ArrayList<Item> itemSelect(Connection conn, HashMap<String, Object> map) throws SQLException{
 		System.out.println("ItemDao.itemSelect()");
 		ArrayList<Item> itemList = new ArrayList<Item>();
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		stmt = conn.prepareStatement("SELECT no, name, price FROM item ORDER BY no LIMIT ?,?");
-		stmt.setInt(1, (currentPage-1)*rowPerPage);
-		stmt.setInt(2, rowPerPage);
+		stmt.setInt(1, (int)map.get("startRow"));
+		stmt.setInt(2, (int)map.get("rowPerPage"));
 		rs = stmt.executeQuery();
 		while(rs.next()) {
 			Item item = new Item();

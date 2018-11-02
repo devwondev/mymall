@@ -20,6 +20,7 @@ public class OrderListController extends HttpServlet {
 		System.out.println("OrderListController.doGet()");
 		memberItemService = new MemberItemService();
 		int memberNo = (int) request.getSession().getAttribute("loginMemberNo");
+		System.out.println(memberNo+"<--memberNo");
 		ArrayList<HashMap<String, Object>> memberItemList = memberItemService.MemberItemList(memberNo);
 		HttpSession session = request.getSession();
 		request.setAttribute("memberItemList", memberItemList);

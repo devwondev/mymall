@@ -2,6 +2,7 @@ package com.test.mymall.web;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,8 +19,16 @@ public class ItemListController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("ItemListController.doGet()");
 		itemService = new ItemService();
-		ArrayList<Item> itemList = itemService.itemSelect();
+		int currentPage = 1;
+		if(request.getParameter("currentPage")!=null) {
+			currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		}
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("currentPage", currentPage);
+		itemService = new ItemService();
+		ArrayList<Item> itemList = itemService.itemSelect(map);
 		request.setAttribute("itemList", itemList);
+		request.setAttribute("pageAction", map);
 		request.getRequestDispatcher("/WEB-INF/view/itemList.jsp").forward(request, response);
 	}
 }

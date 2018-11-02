@@ -30,7 +30,13 @@
 				</td>
 			</tr>
 		</c:forEach>
-
-	</table>
+		</table>
+		<c:if test="${pageAction.currentPage > 1}">
+			<a href="${pageContext.request.contextPath}/ItemListController?currentPage=${pageAction.currentPage-1}">[이전]</a>
+		</c:if>
+		<c:if test="${pageAction.currenPage < lastPage}">
+			<a href="${pageContext.request.contextPath}/ItemListController?currentPage=${pageAction.currentPage+1}">[다음]</a>
+		</c:if>
+	
 </body>
 </html>

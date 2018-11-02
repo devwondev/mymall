@@ -50,3 +50,25 @@ CREATE TABLE IF NOT EXISTS `member_item` (
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+
+insert into item (name, price) values ('Bryonia Alba', 3851);
+insert into item (name, price) values ('HGH Plus', 1293);
+insert into item (name, price) values ('Famotidine', 3983);
+insert into item (name, price) values ('Metamucil', 2147);
+insert into item (name, price) values ('Doxycycline Hyclate', 4825);
+insert into item (name, price) values ('Diphenoxylate Hydrochloride and Atropine Sulfate', 1215);
+insert into item (name, price) values ('Radiogardase', 4800);
+insert into item (name, price) values ('Paroxetine', 1709);
+insert into item (name, price) values ('DG Health Ibuprofen', 2461);
+insert into item (name, price) values ('miconazole 1', 1894);
+insert into item (name, price) values ('Dove', 4946);
+insert into item (name, price) values ('CLE DE PEAU BEAUTE CR COMPACT FOUNDATION', 4855);
+insert into item (name, price) values ('Isomers Clear Skin Acne Treatment Gel', 3102);
+insert into item (name, price) values ('Allergy Desensitization', 4709);
+insert into item (name, price) values ('Pleo Nig Ex', 1738);
+insert into item (name, price) values ('Pigweed Mixture', 4745);
+insert into item (name, price) values ('Lady Speed Stick', 3974);
+insert into item (name, price) values ('Crest', 3446);
+insert into item (name, price) values ('KOMBIGLYZE', 4797);
+insert into item (name, price) values ('Zenzedi', 2822);
+
