@@ -26,7 +26,7 @@ public class OrderController extends HttpServlet {
 		MemberItem memberItem = new MemberItem();
 		memberItem.setItemNo(itemNo);
 		memberItem.setMemberNo(memberNo);
-		memberItemService.insertMemberItem();
+		memberItemService.insertMemberItem(memberItem);
 		response.sendRedirect(request.getContextPath()+"/OrderListController");
 	}
 }

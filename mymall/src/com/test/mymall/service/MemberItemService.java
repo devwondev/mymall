@@ -12,7 +12,7 @@ public class MemberItemService {
 	private MemberItem memberItem;
 	private MemberItemDao memberItemDao;
 	// 주문입력처리
-	public void insertMemberItem() {
+	public void insertMemberItem(MemberItem memberItem) {
 		System.out.println("MemberItemService.insertMemberItem()");
 		Connection conn = null;
 		memberItemDao = new MemberItemDao();
