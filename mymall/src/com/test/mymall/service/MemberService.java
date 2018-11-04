@@ -15,7 +15,6 @@ public class MemberService {
 	//SqlSession sqlSession;
 	private MemberDao memberDao;
 	private MemberItemDao memberItemDao;
-	//회원정보수정해야함!!
 /*	public void removeMember(int no) {
 		System.out.println("MemberService.removeMember()");
 		Connection conn = null;
@@ -41,6 +40,37 @@ public class MemberService {
 		}
 		
 	}*/
+	// 회원정보수정
+	public void modifyMember(Member member) {
+		System.out.println("MemberService.modifyMember()");
+		Connection conn = null;
+		try {
+			conn = DBHelper.getConnection();
+			memberDao = new MemberDao();
+			memberDao.modifyMember(conn, member);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			DBHelper.close(null, null, conn);
+		}
+	}
+	// 한명의 회원정보조회
+	public Member selectMember(Member member) {
+		System.out.println("MemberService.selectMember()");
+		Connection conn = null;
+		Member memberSelect = new Member();
+		try {
+			conn = DBHelper.getConnection();
+			memberDao = new MemberDao();
+			memberSelect = memberDao.selectMember(conn, member);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			DBHelper.close(null, null, conn);
+		}
+		return memberSelect;
+	}
+	// 회원탈퇴
 	public void removeMember(int no) {
 		System.out.println("MemberService.removeMember()");
 		Connection conn = null;

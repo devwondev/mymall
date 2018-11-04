@@ -9,6 +9,33 @@ import com.test.mymall.commons.DBHelper;
 import com.test.mymall.vo.Member;
 
 public class MemberDao {
+	// 회원수정
+	public void modifyMember(Connection conn, Member member) throws SQLException {
+		System.out.println("MemberDao.modifyMember()");
+		PreparedStatement stmt = null;
+		stmt = conn.prepareStatement("UPDATE member SET pw=? WHERE id=?");
+		stmt.setString(1, member.getPw());
+		stmt.setString(2, member.getId());
+		stmt.executeUpdate();
+		stmt.close();
+	}
+	// 한명의 회원정보조회
+	public Member selectMember(Connection conn,  Member member) throws SQLException {
+		System.out.println("MemberDao.selectMember()");
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		stmt = conn.prepareStatement("SELECT id, level FROM member WHERE id=?");
+		stmt.setString(1, member.getId());
+		rs = stmt.executeQuery();
+		Member memberSelect = new Member();
+		if(rs.next()) {
+			memberSelect.setId(rs.getString("id"));
+			memberSelect.setLevel(rs.getInt("level"));
+		}
+		rs.close();
+		stmt.close();
+		return memberSelect;
+	}
 	// 회원탈퇴(회원탈퇴되면 주문취소되야함->트랜잭션 Rollback)
 	public void deleteMember(Connection conn, int no) throws SQLException {
 		System.out.println("MemberDao.deleteMember()");

@@ -21,7 +21,7 @@ public class ItemDao {
 	/*public int insertItem(SqlSession sqlSession, Item item) {
 		return sqlSession.insert("",item);
 	}*/
-	// 상품리스트
+	// 상품리스트 페이징
 	public ArrayList<Item> itemSelect(Connection conn, HashMap<String, Object> map) throws SQLException{
 		System.out.println("ItemDao.itemSelect()");
 		ArrayList<Item> itemList = new ArrayList<Item>();
@@ -29,7 +29,7 @@ public class ItemDao {
 		ResultSet rs = null;
 		stmt = conn.prepareStatement("SELECT no, name, price FROM item ORDER BY no LIMIT ?,?");
 		stmt.setInt(1, (int)map.get("startRow"));
-		stmt.setInt(2, (int)map.get("rowPerPage"));
+		stmt.setInt(2, (int)map.get("pagePerRow"));
 		rs = stmt.executeQuery();
 		while(rs.next()) {
 			Item item = new Item();

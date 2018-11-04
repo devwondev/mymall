@@ -19,15 +19,15 @@ public class ItemListController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("ItemListController.doGet()");
 		itemService = new ItemService();
-		int currentPage = 1;
+		int currentPage=1;
 		if(request.getParameter("currentPage")!=null) {
-			currentPage = Integer.parseInt(request.getParameter("currentPage"));
+			currentPage=Integer.parseInt(request.getParameter("currentPage"));
 		}
-		HashMap<String, Object> map = new HashMap<String, Object>();
+		HashMap<String, Object> map=new HashMap<String, Object>();
 		map.put("currentPage", currentPage);
-		itemService = new ItemService();
-		ArrayList<Item> itemList = itemService.itemSelect(map);
-		request.setAttribute("itemList", itemList);
+		this.itemService=new ItemService();
+		ArrayList<Item> list=this.itemService.selectItemList(map);
+		request.setAttribute("itemList", list);
 		request.setAttribute("pageAction", map);
 		request.getRequestDispatcher("/WEB-INF/view/itemList.jsp").forward(request, response);
 	}
