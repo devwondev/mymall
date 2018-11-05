@@ -18,11 +18,11 @@
 	<c:if test="${loginMemberLevel == 1}">
 		관리자
 		<a href="">회원리스트</a>
-		<a href="">상품리스트</a>
+		<a href="${pageContext.request.contextPath}/ItemListController">상품리스트</a>
 	</c:if>
 	<c:if test="${loginMemberLevel == 0}">
 		회원
-		<a href="${pageContext.request.contextPath}/ModifyMemberController?memberId=${loginMemberId}">회원정보수정</a>
+		<a href="${pageContext.request.contextPath}/ModifyMemberController?id=${loginMemberId}">회원정보수정</a>
 		<a href="${pageContext.request.contextPath}/DeleteMemberController?memberNo=${loginMemberNo}">회원탈퇴</a>
 		<a href="${pageContext.request.contextPath}/ItemListController">상품리스트</a>
 		<a href="${pageContext.request.contextPath}/OrderListController?memberNo=${loginMemberNo}">주문리스트</a>

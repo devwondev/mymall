@@ -1,43 +1,43 @@
 package com.test.mymall.service;
 
-import java.sql.Connection;
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
 
 import com.test.mymall.commons.DBHelper;
 import com.test.mymall.dao.MemberItemDao;
 import com.test.mymall.vo.MemberItem;
 
 public class MemberItemService {
+	SqlSession sqlSession;
 	private MemberItem memberItem;
 	private MemberItemDao memberItemDao;
 	// 주문입력처리
 	public void insertMemberItem(MemberItem memberItem) {
 		System.out.println("MemberItemService.insertMemberItem()");
-		Connection conn = null;
 		memberItemDao = new MemberItemDao();
 		try {
-			conn = DBHelper.getConnection();
-			memberItemDao.insertMemberItem(conn, memberItem);
+			sqlSession = DBHelper.getSqlSession();
+			memberItemDao.insertMemberItem(sqlSession, memberItem);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {
-			DBHelper.close(null, null, conn);
+			sqlSession.close();
 		}
 	}
 	// 주문리스트
-	public ArrayList<HashMap<String, Object>> MemberItemList(int memberNo){
+	public List<HashMap<String, Object>> MemberItemList(int memberNo){
 		System.out.println("MemberItemService.MemberItemList()");
-		Connection conn = null;
 		memberItemDao = new MemberItemDao();
-		ArrayList<HashMap<String, Object>> memberItemList = null;
+		List<HashMap<String, Object>> memberItemList = null;
 		try {
-			conn = DBHelper.getConnection();
-			memberItemList = memberItemDao.MemberItemList(conn, memberNo);
+			sqlSession = DBHelper.getSqlSession();
+			memberItemList = memberItemDao.memberItemList(sqlSession, memberNo);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {
-			DBHelper.close(null, null, conn);
+			sqlSession.close();
 		}
 		return memberItemList;
 	}

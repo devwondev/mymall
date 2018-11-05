@@ -1,23 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE configuration
-PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
 <configuration>
-  <environments default="development">
-    <environment id="development">
-      <transactionManager type="JDBC"/>
-      <dataSource type="POOLED">
-        <property name="driver" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://localhost:3306"/>
-        <property name="username" value="scott"/>
-        <property name="password" value="tiger"/>
-      </dataSource>
-    </environment>
-  </environments>
-  
-  <mappers> 
-    <mapper resource="classpath:com/test/mymall/dao/Member.xml"/>
-    <mapper resource="classpath:com/test/mymall/dao/Item.xml"/>
-  </mappers>
-  
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="com.mysql.jdbc.Driver" />
+				<property name="url" value="jdbc:mysql://localhost:3306/mall?useUnicode=true&amp;characterEncoding=utf8" />
+				<property name="username" value="root" />
+				<property name="password" value="java0000" />
+			</dataSource>
+		</environment>
+	</environments>
+	<mappers>
+		<mapper resource="com/test/mymall/dao/MemberMapper.xml" />
+		<mapper resource="com/test/mymall/dao/ItemMapper.xml" />
+		<mapper resource="com/test/mymall/dao/MemberItemMapper.xml" />
+	</mappers>
 </configuration>

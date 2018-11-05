@@ -30,7 +30,6 @@ public class AddMemberController extends HttpServlet {
 		String id = request.getParameter("id");
 		String pw = request.getParameter("pw");
 		memberService = new MemberService();
-		memberDao = new MemberDao();
 		Member member = new Member();
 		member.setId(id);
 		member.setPw(pw);

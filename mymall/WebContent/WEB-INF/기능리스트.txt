@@ -1,18 +1,44 @@
 1. 메인페이지
 (C)IndexController.doGet -> (V)index.jsp
+
 2. 회원가입 폼
 (C)AddMemberController.doGet -> (V)addMember.jsp
+
 3. 회원가입 액션
-(C)AddMember.doPost -> (M)memberDao.insertMember
+(C)AddMember.doPost -> (S)MemberService.addMember -> (M)memberDao.insertMember
+-> (C)LoginController.doGet -> (V)login.jsp
+
 4. 로그인 폼
 (C)LoginController.doGet -> (V)login.jsp
+
 5. 로그인 액션
-(C)LoginContoller.doPost -> (M)MemberDao.login()
+(C)LoginController.doGet -> (S)MemberService.loginMember
+ -> (M)MemberDao.loginMember -> success:(C)IndexController / fail:(V)login.jsp
 
-11.01(목) 오전
-1. 세션 로그인 정보 수정
-2. 주문
-3. 주문 목록(조인)
+6. 회원정보수정폼
+(C)ModifyController.doGet -> (S)MemberService.selectMember
+-> (M)MemberDao.selectMember -> (V) modifyMember.jsp
 
-11.01(목) 오후
-1. service계층 사용 : 트랜잭션처리 회원삭제 -> 주문삭제
+7. 회원정보수정액션
+(C)ModifyController.doPost -> (S)MemberService.modifyMember
+-> (M)MemberDao.modifyMember -> (C)IndexController
+
+8. 회원탈퇴
+- 트랜잭션(회원탈퇴 클릭 시, 회원번호에 맞게 주문 삭제 -> 회원삭제)
+(C)DeleteMemberController.doGet -> (S)MemberService.removeMember
+-> (M)MebmerItemDao.deleteMemberItem, (M)MemberDao.deleteMember
+-> 로그아웃 -> (C)IndexController
+
+9. 상품리스트
+(C)ItemListController.doGet -> (S)ItemService.selectItemList
+-> (M)itemDao.itemSelect, (M)itemDao.getItemCount
+-> (V)itemList.jsp
+
+10. 주문
+(C)OrderController.doGet -> (S)MemberItemService.insertMemberItem
+-> (M)MemberItemDao.insertMemberItem -> (C)OrderListController
+
+11. 주문리스트
+(C)OrderListController.doGet -> (S)MemberItemService.MemberItemList
+->(M)MemberItemDao.MemberItemList -> (V)orderList.jsp
+

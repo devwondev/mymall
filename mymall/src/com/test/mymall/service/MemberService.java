@@ -1,9 +1,7 @@
 package com.test.mymall.service;
 
-import java.sql.Connection;
-import java.sql.SQLException;
 
-//import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSession;
 
 import com.test.mymall.commons.DBHelper;
 import com.test.mymall.dao.MemberDao;
@@ -11,117 +9,83 @@ import com.test.mymall.dao.MemberItemDao;
 import com.test.mymall.vo.Member;
 
 public class MemberService {
-	//mybatis
-	//SqlSession sqlSession;
 	private MemberDao memberDao;
 	private MemberItemDao memberItemDao;
-/*	public void removeMember(int no) {
-		System.out.println("MemberService.removeMember()");
-		Connection conn = null;
-		try {
-			// 처리할 connection 생성
-			sqlSession = DBHelper.getSqlSession();
-			//conn.setAutoCommit(false);// 자동 커밋하지않겠다
-			sqlSession.commit();
-			memberItemDao = new MemberItemDao();
-			memberItemDao.deleteMemberItem(conn, no);
-			memberDao = new MemberDao();
-			memberDao.deleteMember(conn, no);
-			//conn.commit();
-		}catch(Exception e) {
-			try {
-				sqlSession.rollback();
-				//conn.rollback();	
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
-		}finally {
-			sqlSession.close();
-		}
-		
-	}*/
 	// 회원정보수정
 	public void modifyMember(Member member) {
 		System.out.println("MemberService.modifyMember()");
-		Connection conn = null;
+		SqlSession sqlSession = null;
 		try {
-			conn = DBHelper.getConnection();
+			sqlSession = DBHelper.getSqlSession();
 			memberDao = new MemberDao();
-			memberDao.modifyMember(conn, member);
+			memberDao.modifyMember(sqlSession, member);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {
-			DBHelper.close(null, null, conn);
+			sqlSession.close();
 		}
 	}
 	// 한명의 회원정보조회
-	public Member selectMember(Member member) {
+	public Member selectMember(String id) {
 		System.out.println("MemberService.selectMember()");
-		Connection conn = null;
-		Member memberSelect = new Member();
+		SqlSession sqlSession = null;
+		Member member = new Member();
 		try {
-			conn = DBHelper.getConnection();
+			sqlSession = DBHelper.getSqlSession();
 			memberDao = new MemberDao();
-			memberSelect = memberDao.selectMember(conn, member);
+			member = memberDao.selectMember(sqlSession, id);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {
-			DBHelper.close(null, null, conn);
+			sqlSession.close();
 		}
-		return memberSelect;
+		return member;
 	}
 	// 회원탈퇴
 	public void removeMember(int no) {
 		System.out.println("MemberService.removeMember()");
-		Connection conn = null;
+		SqlSession sqlSession = null;
 		try {
-			// 처리할 connection 생성
-			conn = DBHelper.getConnection();
-			conn.setAutoCommit(false);// 자동 커밋하지않겠다..(이 부분 검색해보자)
+			sqlSession = DBHelper.getSqlSession();
 			memberItemDao = new MemberItemDao();
-			memberItemDao.deleteMemberItem(conn, no);
+			memberItemDao.deleteMemberItem(sqlSession, no);
 			memberDao = new MemberDao();
-			memberDao.deleteMember(conn, no);
-			conn.commit();
+			memberDao.deleteMember(sqlSession, no);
+			sqlSession.commit();
 		}catch(Exception e) {
-			try {
-				conn.rollback();	// 트랜잭션 공부..
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
+			sqlSession.rollback();
 		}finally {
-			DBHelper.close(null, null, conn);
+			sqlSession.close();
 		}
 		
 	}
 	// 회원가입
 	public void addMember(Member member) {
 		System.out.println("MemberService.addMember()");
-		Connection conn = null;
+		SqlSession sqlSession = null;
 		memberDao = new MemberDao();
 		try {
-			conn = DBHelper.getConnection();
-			memberDao.insertMember(conn, member);
+			sqlSession = DBHelper.getSqlSession();
+			memberDao.insertMember(sqlSession, member);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {
-			DBHelper.close(null, null, conn);
+			sqlSession.close();
 		}
 	}
 	// 로그인
 	public Member login(Member member) {
 		System.out.println("MemberService.login()");
-		Connection conn = null;
-		System.out.println(member+"서비스member");
+		SqlSession sqlSession = null;
 		memberDao = new MemberDao();
 		Member memberCheck = null;
 		try {
-			conn = DBHelper.getConnection();
-			memberCheck = memberDao.login(conn, member);
+			sqlSession = DBHelper.getSqlSession();
+			memberCheck = memberDao.login(sqlSession, member);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {
-			DBHelper.close(null, null, conn);
+			sqlSession.close();
 		}
 		return memberCheck;
 	}

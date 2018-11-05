@@ -7,6 +7,9 @@
 <title>modifyMember</title>
 </head>
 <body>
+	<div>
+		<a href="${pageContext.request.contextPath}/IndexController">메인화면</a>
+	</div>
 	<h1>modifyMember</h1>
 	<form action="${pageContext.request.contextPath}/ModifyMemberController" method="post">
 		<table border="1">
@@ -16,7 +19,7 @@
 			</tr>
 			<tr>
 				<th>비밀번호</th>
-				<td><input type="password" name="pw"></td>
+				<td><input type="password" name="pw" value="${member.pw}"></td>
 			</tr>
 			<tr>
 				<th>권한</th>

@@ -1,8 +1,8 @@
 package com.test.mymall.web;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,8 +25,8 @@ public class ItemListController extends HttpServlet {
 		}
 		HashMap<String, Object> map=new HashMap<String, Object>();
 		map.put("currentPage", currentPage);
-		this.itemService=new ItemService();
-		ArrayList<Item> list=this.itemService.selectItemList(map);
+		itemService=new ItemService();
+		List<Item> list=itemService.selectItemList(map);
 		request.setAttribute("itemList", list);
 		request.setAttribute("pageAction", map);
 		request.getRequestDispatcher("/WEB-INF/view/itemList.jsp").forward(request, response);

@@ -7,6 +7,9 @@
 <title>orderList</title>
 </head>
 <body>
+	<div>
+		<a href="${pageContext.request.contextPath}/IndexController">메인화면</a>
+	</div>
 	<h1>orderList</h1>
 	<table>
 		<tr>
